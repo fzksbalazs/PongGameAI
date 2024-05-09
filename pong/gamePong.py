@@ -12,7 +12,7 @@ class PongGame:
         self.right_paddle = self.game.right_paddle
         self.ball = self.game.ball
 
-    def test_ai(self, genome, config):
+    def test_ai(self, genome, config): ##AZ AI TESTELÉSE VALÓS ELLENFÉL ELLEN.
         net = neat.nn.FeedForwardNetwork.create(genome, config)
 
         run = True
@@ -47,7 +47,7 @@ class PongGame:
 
         pygame.quit()
 
-    def train_ai(self, genome1, genome2, config):
+    def train_ai(self, genome1, genome2, config): ##AZ AI TRARINELÉSE KÉT NEAT NEURÁLIS HÁLÓZAT ÁTADÁSÁVAL, ÉS A CONFIG SEGITSÉGÉVEL. EZEK AZ AI-OK EGYMÁS ELLEN JÁTSZANAK, ÉS A LEGJOBB "FITNESS"-EL RENDELKEZŐ LESZ A MI AI-UNK.
         net1 = neat.nn.FeedForwardNetwork.create(genome1, config)
         net2 = neat.nn.FeedForwardNetwork.create(genome2, config)
 
@@ -93,7 +93,7 @@ class PongGame:
         genome2.fitness += game_info.right_hits
 
 
-def eval_genomes(genomes, config):
+def eval_genomes(genomes, config): ## MINDEGYES "GENOM" EGYÁS ELLEN JÁTSZIK EGYSZER, HOGY MEGÁLLAPITHASSUK A FITNESS-ÜKET.
     width, height = 700, 500
     window = pygame.display.set_mode((width, height))
 
@@ -110,23 +110,23 @@ def eval_genomes(genomes, config):
 
 
 def run_neat(config):
-    ##p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-2')
-    p = neat.Population(config)
+    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-9') ##Egy adott AI generáció kiválasztása, betöltése (Ha traineljük az AI-t ezt kikell kommentezni)
+    ##p = neat.Population(config)
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
     p.add_reporter(neat.Checkpointer(1))
 
-    winner = p.run(eval_genomes, 10)
+    winner = p.run(eval_genomes, 10) ##Hány generációig fejlesszük az AI-t
     with open("best.pickle", "wb") as f:
         pickle.dump(winner, f)
 
 
 def test_ai(config):
-    with open("best.pickle", "rb") as f:
+    with open("best.pickle", "rb") as f: 
         winner = pickle.load(f)
     width, height = 700, 500
-    window = pygame.display.set_mode((width, height))
+    window = pygame.display.set_mode((width, height)) ##Játék ablak beállitása
 
     
 
@@ -141,5 +141,5 @@ if __name__ == "__main__":
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
-    run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
-    ##test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
+    ##run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
+    test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
