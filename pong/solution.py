@@ -141,5 +141,5 @@ if __name__ == "__main__":
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
-    ##run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
-    test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
+    run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
+    ##test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
