@@ -110,15 +110,15 @@ def eval_genomes(genomes, config): ## MINDEGYES "GENOM" EGYÁS ELLEN JÁTSZIK EG
 
 
 def run_neat(config):
-    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-9') ##Egy adott AI generáció kiválasztása, betöltése (Ha traineljük az AI-t ezt kikell kommentezni)
-    ##p = neat.Population(config)
+    ##p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-5') ##AI CHECKPOINTRÓL VALÓ TRAININGELÉSE, 114.SORNAK KIKELL KOMMENTELVE LENNIE
+    p = neat.Population(config) ## HA NEM CHECKPOINTRÓL FOLYTATJUK A TRAININGELÉST, 113.SORNAK KIKELL KOMMENTELVE LENNIE
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
     p.add_reporter(neat.Checkpointer(1))
 
-    winner = p.run(eval_genomes, 10) ##Hány generációig fejlesszük az AI-t
-    with open("best.pickle", "wb") as f:
+    winner = p.run(eval_genomes, 11) ##Hány generációig fejlesszük az AI-t, a legjobb AI eltárolása
+    with open("best.pickle", "wb") as f: 
         pickle.dump(winner, f)
 
 
@@ -141,5 +141,5 @@ if __name__ == "__main__":
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_path)
-    run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
-    ##test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
+    ##run_neat(config) ##AI TRAININGELÉS (test_ai-nak ki kell kommentelni lennie)
+    test_ai(config) ## MAGA A JÁTÉK (run_neat-nek kikell kommentelve lennie)
